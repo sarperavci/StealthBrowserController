@@ -20,10 +20,10 @@ pip install stealth-browser-controller
 ## 🎮 Quick Start
 
 ```python
-from stealth_browser_controller.models.browser import Browser
+from stealth_browser_controller import StealthBrowserController
 
 # Create a browser instance
-browser = Browser("google-chrome")
+browser = StealthBrowserController("google-chrome")
 
 # Open a website
 browser.open("https://www.google.com")
