@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="stealth-browser-controller",
-    version="0.1.0",
+    version=open("src/VERSION").read(),
     description="A stealthy browser automation tool with only screen and mouse",
     long_description=open("README.md").read(),
     long_description_content_type="text/markdown",
