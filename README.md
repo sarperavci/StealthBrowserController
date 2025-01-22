@@ -24,6 +24,7 @@ from stealth_browser_controller import StealthBrowserController
 
 # Create a browser instance
 browser = StealthBrowserController("google-chrome")
+# browser = StealthBrowserController("path/to/your/browser/executable")
 
 # Open a website
 browser.open("https://www.google.com")
