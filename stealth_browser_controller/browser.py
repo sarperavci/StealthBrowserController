@@ -3,6 +3,8 @@ import subprocess
 import pyautogui
 import time
 from .models.element import Element
+import psutil
+import os
 
 
 class StealthBrowserController:
@@ -14,6 +16,29 @@ class StealthBrowserController:
         self.browser_path = browser_path
         self._process = None
         self.params = params
+    def is_browser_running(self) -> bool:
+        """
+        Check if the specified browser is already running.
+
+        Returns:
+            bool: True if the browser specified by `browser_path` is running, False otherwise
+        """
+        if not self.browser_path:
+            raise ValueError("Browser path not set")
+
+        # Extract executable name from path
+        browser_executable = os.path.basename(self.browser_path).lower()
+
+        for proc in psutil.process_iter(["exe", "name"]):
+            try:
+                # Check if the process executable matches the browser path
+                if proc.info["exe"] and browser_executable in proc.info["exe"].lower():
+                    return True
+                if proc.info["name"] and browser_executable in proc.info["name"].lower():
+                    return True
+            except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
+                pass
+        return False
 
     def open(self, url: str, wait_time: int = 2, max_retries: int = 3) -> bool:
         """
@@ -38,6 +63,18 @@ class StealthBrowserController:
             args.extend(self.params)
         args.append(url)
 
+        if self.is_browser_running():
+            print("Browser is already open. Skipping new process creation.")
+            self._process = subprocess.Popen(
+                args,
+                stderr=subprocess.DEVNULL,
+                stdout=subprocess.DEVNULL,
+                start_new_session=True,
+            )
+            time.sleep(wait_time)
+
+            return True
+
         for attempt in range(max_retries):
             try:
                 if self._process:
@@ -52,7 +89,9 @@ class StealthBrowserController:
 
                 time.sleep(wait_time)
 
-                return True
+                if self._process.poll() is None:
+                    print(f"Browser opened successfully on attempt {attempt + 1}")
+                    return True
 
             except subprocess.SubprocessError as e:
                 print(f"Failed to open browser on attempt {attempt + 1}: {str(e)}")
