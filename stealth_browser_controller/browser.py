@@ -52,9 +52,7 @@ class StealthBrowserController:
 
                 time.sleep(wait_time)
 
-                if self._process.poll() is None:
-                    print(f"Browser opened successfully on attempt {attempt + 1}")
-                    return True
+                return True
 
             except subprocess.SubprocessError as e:
                 print(f"Failed to open browser on attempt {attempt + 1}: {str(e)}")
