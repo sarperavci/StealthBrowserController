@@ -40,3 +40,5 @@ The demo uses the following reference images to locate and interact with page el
 
 Here you can see the demo video:
 
+https://github.com/user-attachments/assets/43d7762c-2e4b-432c-b11f-8ba6e5b2b6c1
+
