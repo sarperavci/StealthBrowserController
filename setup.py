@@ -11,7 +11,7 @@ setup(
     author="Sarper AVCI",
     author_email="sarperavci20@gmail.com",
     url="https://github.com/sarperavci/stealth-browser-controller",
-    packages=find_packages(),
+    packages=find_packages(exclude=["examples"]),
     install_requires=[
         "pyautogui",
         "human-mouse",
