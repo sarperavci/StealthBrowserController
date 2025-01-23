@@ -3,6 +3,7 @@ import subprocess
 import pyautogui
 import time
 from .models.element import Element
+from .helpers.mouse_controller import get_mouse
 
 
 class StealthBrowserController:
@@ -14,6 +15,7 @@ class StealthBrowserController:
         self.browser_path = browser_path
         self._process = None
         self.params = params
+        self.mouse_controller = get_mouse()
 
     def open(self, url: str, wait_time: int = 2, max_retries: int = 3) -> bool:
         """
@@ -69,13 +71,15 @@ class StealthBrowserController:
         self._process = None
 
     def find_element_by_image(
-        self, image_path: str, timeout: int = 10
+        self, image_path: str, timeout: int = 10, confidence: float = 0.9
     ) -> Optional[Element]:
         """Find an element on screen by matching an image"""
         t0 = time.time()
         while time.time() - t0 < timeout:
             try:
-                location = pyautogui.locateCenterOnScreen(image_path, confidence=0.9)
+                location = pyautogui.locateCenterOnScreen(
+                    image_path, confidence=confidence
+                )
                 if location:
                     return Element(image_path, location.x, location.y)
             except pyautogui.ImageNotFoundException:
