@@ -1,9 +1,12 @@
 import os
 import datetime
 import mss
-from typing import Tuple
 import tempfile
 import pyautogui
+from collections import namedtuple
+from typing import Optional
+  
+Point = namedtuple('Point', 'x y')
 
 def take_screenshot(output_dir="."):
     """
@@ -28,7 +31,7 @@ def take_screenshot(output_dir="."):
     
     return filename
 
-def locate_on_screen(image_path: str, confidence: float = 0.9) -> Tuple[int, int]:
+def locate_on_screen(image_path: str, confidence: float = 0.9) -> Optional[Point]:
     """
     Locates an image on the screen and returns its center coordinates.
     
@@ -37,10 +40,12 @@ def locate_on_screen(image_path: str, confidence: float = 0.9) -> Tuple[int, int
         confidence (float): Confidence level for image matching.
         
     Returns:
-        Tuple[int, int]: Center coordinates of the located image, or None if not found.
+        Point: Center coordinates of the located image, or None if not found.
     """
     temp_directory = tempfile.mkdtemp()
     screenshot_path = take_screenshot(temp_directory)
     result = pyautogui.locate(image_path, screenshot_path, confidence=confidence)
     os.remove(screenshot_path)
-    return result
+    if result is None:
+        return None
+    return pyautogui.center(result)
