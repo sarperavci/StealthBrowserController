@@ -4,7 +4,7 @@ import pyautogui
 import time
 from .models.element import Element
 from .helpers.mouse_controller import get_mouse
-
+from .helpers.screen_shot import locate_on_screen
 
 class StealthBrowserController:
     """Main controller class for browser automation"""
@@ -77,9 +77,7 @@ class StealthBrowserController:
         t0 = time.time()
         while time.time() - t0 < timeout:
             try:
-                location = pyautogui.locateCenterOnScreen(
-                    image_path, confidence=confidence
-                )
+                location = locate_on_screen(image_path, confidence=confidence)
                 if location:
                     return Element(image_path, location.x, location.y)
             except pyautogui.ImageNotFoundException:
