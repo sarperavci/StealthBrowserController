@@ -1,3 +1,4 @@
 human-mouse
 pyautogui
 mss
+opencv-python
