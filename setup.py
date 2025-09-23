@@ -15,6 +15,8 @@ setup(
     install_requires=[
         "pyautogui",
         "human-mouse",
+        "mss",
+        "opencv-python",
     ],
     python_requires=">=3.10",
     classifiers=[
