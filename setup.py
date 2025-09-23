@@ -6,7 +6,7 @@ setup(
     name="stealth-browser-controller",
     version=VERSION,
     description="A stealthy browser automation tool with only screen and mouse",
-    long_description=open("README.md").read(),
+    long_description=open("README.md", encoding="utf-8").read(),
     long_description_content_type="text/markdown",
     author="Sarper AVCI",
     author_email="sarperavci20@gmail.com",
