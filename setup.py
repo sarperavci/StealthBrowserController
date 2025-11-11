@@ -1,12 +1,12 @@
 from setuptools import setup, find_packages
 
-VERSION = "0.1.8"
+VERSION = "0.1.9"
 
 setup(
     name="stealth-browser-controller",
     version=VERSION,
     description="A stealthy browser automation tool with only screen and mouse",
-    long_description=open("README.md").read(),
+    long_description=open("README.md", encoding="utf-8").read(),
     long_description_content_type="text/markdown",
     author="Sarper AVCI",
     author_email="sarperavci20@gmail.com",
@@ -15,8 +15,10 @@ setup(
     install_requires=[
         "pyautogui",
         "human-mouse",
+        "mss",
+        "opencv-python",
     ],
-    python_requires=">=3.7",
+    python_requires=">=3.10",
     classifiers=[
         "Development Status :: 3 - Alpha",
         "Intended Audience :: Developers",
